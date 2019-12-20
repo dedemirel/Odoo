@@ -2,15 +2,9 @@ package odoo.pages;
 
 import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 //everything that is in common among odoo.pages
@@ -42,7 +36,7 @@ public class BasePage {
      * @return page name, for example: Dashboard
      */
     public String getPageSubTitle() {
-        //ant time we are verifying page name, or page subtitle, loader mask appears
+        //ant time we are verifying page name, or page subtitle
         BrowserUtils.wait(2);
         BrowserUtils.waitForStaleElement(pageSubTitle);
         return pageSubTitle.getText();
