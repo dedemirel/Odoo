@@ -36,6 +36,12 @@ public WebElement contacts;
     public WebElement loaderMask;
     @FindBy(css = "[accesskey=\"c\"]")
     public WebElement create;
+@FindBy(xpath = "//*[normalize-space()='CRM' and @class=\"oe_menu_text\"]")
+public WebElement Crm;
+
+
+   @FindBy(xpath = "//*[@class=\"active\"and text()='Pipeline']")
+   public WebElement pipeline;
 
 
 
@@ -48,12 +54,12 @@ public WebElement contacts;
     /**
      * @return page name, for example: Dashboard
      */
-    public String getPageSubTitle() {
+    public String getPageSubTitle(WebElement element) {
         //ant time we are verifying page name, or page subtitle
         BrowserUtils.wait(2);
-        BrowserUtils.waitForStaleElement(contacts);
+        BrowserUtils.waitForStaleElement(element);
 
-        return contacts.getText();
+        return element.getText();
     }
 
     public boolean waitUntilLoaderMaskDisappear() {
@@ -70,7 +76,14 @@ public WebElement contacts;
         }
         return false;
     }
-
+public void navigateTo(String module){
+        String moduleLocator="//*[normalize-space()='"+module+"' and @class=\"oe_menu_text\"]";
+WebElement Module=Driver.get().findElement(By.xpath(moduleLocator));
+    WebDriverWait wait = new WebDriverWait(Driver.get(), 20);
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(moduleLocator)));
+BrowserUtils.waitForClickablility(Module,10);
+    Module.click();
+    }
 
 
 }
