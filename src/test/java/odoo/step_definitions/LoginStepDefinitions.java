@@ -32,7 +32,7 @@ public class LoginStepDefinitions {
     @Then("user verifies that {string} page subtitle is displayed")
     public void user_verifies_that_page_subtitle_is_displayed(String string) {
         BrowserUtils.wait(4);
-        Assert.assertEquals(string, loginPage.getPageSubTitle());
+        Assert.assertEquals(string, loginPage.getPageSubTitle(loginPage.pageSubTitle));
         System.out.println("Verifying page subtitle: " + string);
     }
 
