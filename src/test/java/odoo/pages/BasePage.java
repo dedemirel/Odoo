@@ -18,10 +18,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 //top menu appears on every single page
 //so we can keep them here
 public class BasePage {
-@FindBy(css = "[data-menu=\"68\"]")
-public WebElement contacts;
+    @FindBy(css = "[data-menu=\"68\"]")
+    public WebElement contacts;
 
-@FindBy(css = "a[class='oe_menu_leaf']")
+    @FindBy(css = "a[class='oe_menu_leaf']")
     public WebElement pageSubTitle;
 
     @FindBy(css = "#user-menu > a")
@@ -32,17 +32,16 @@ public WebElement contacts;
 
     @FindBy(linkText = "My User")
     public WebElement myUser;
-@FindBy(css = "[class=\"o_loading\"]")
+    @FindBy(css = "[class=\"o_loading\"]")
     public WebElement loaderMask;
     @FindBy(css = "[accesskey=\"c\"]")
     public WebElement create;
-@FindBy(xpath = "//*[normalize-space()='CRM' and @class=\"oe_menu_text\"]")
-public WebElement Crm;
+    @FindBy(xpath = "//*[normalize-space()='CRM' and @class=\"oe_menu_text\"]")
+    public WebElement Crm;
 
 
-   @FindBy(xpath = "//*[@class=\"active\"and text()='Pipeline']")
-   public WebElement pipeline;
-
+    @FindBy(xpath = "//*[@class=\"active\"and text()='Pipeline']")
+    public WebElement pipeline;
 
 
     public BasePage() {
@@ -51,6 +50,7 @@ public WebElement Crm;
         //this means this page class
         PageFactory.initElements(Driver.get(), this);
     }
+
     /**
      * @return page name, for example: Dashboard
      */
@@ -63,7 +63,9 @@ public WebElement Crm;
     }
 
     public boolean waitUntilLoaderMaskDisappear() {
+
         WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
+
         try {
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class=\"o_web_client oe_wait\"]")));
             return true;
@@ -74,15 +76,18 @@ public WebElement Crm;
         } catch (WebDriverException e) {
             e.printStackTrace();
         }
+
         return false;
     }
-public void navigateTo(String module){
-        String moduleLocator="//*[normalize-space()='"+module+"' and @class=\"oe_menu_text\"]";
-WebElement Module=Driver.get().findElement(By.xpath(moduleLocator));
-    WebDriverWait wait = new WebDriverWait(Driver.get(), 20);
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(moduleLocator)));
-BrowserUtils.waitForClickablility(Module,10);
-    Module.click();
+
+    public void navigateTo(String module) {
+
+        WebElement Module = Driver.get().findElement(By.xpath("//*[normalize-space()='" + module + "' and @class=" +
+                "\"oe_menu_text\"]"));
+
+//      BrowserUtils.waitForPresence(moduleLocator, 10);
+        BrowserUtils.waitForClickablility(Module, 10);
+        Module.click();
     }
 
 

@@ -79,6 +79,11 @@ public class BrowserUtils {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    public static WebElement waitForPresence(String elementxpath, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
+        return wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(elementxpath)));
+    }
+
     //    PLEASE INSERT THIS METHOD INTO BROWSER UTILS
     /*
      * takes screenshot

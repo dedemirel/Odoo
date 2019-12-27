@@ -21,7 +21,6 @@ Pages page = new Pages();
     public void userAbleToNavigateModule(String module) {
 
         page.loginPage.navigateTo(module);
-
     }
 
 
