@@ -10,8 +10,7 @@ Feature: Login
 
   @events_crm_manager
   Scenario: Login as events crm manager
-    Given user is on the login page
-    Then user logs in as events crm manager
-    And user verifies that "Discuss" page subtitle is displayed
-
-
+    Given user is on the login page and page title is "Login | Best ERP solution for startups"
+    Then user logs in as events "crm_manager"
+#  crm_menager is one of the credentials in the configuratinos
+    And user verifies that "#Inbox - Odoo"  is page title is displayed
