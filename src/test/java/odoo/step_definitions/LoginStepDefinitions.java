@@ -25,7 +25,7 @@ public class LoginStepDefinitions {
 
         //we read username and password from properties file
         String userName = ConfigurationReader.getProperty(credentialName);
-        String password = ConfigurationReader.getProperty(credentialName+"_password");
+        String password = ConfigurationReader.getProperty(credentialName + "_password");
         //passwords will be stored as (credential_name_password)
         page.loginPage.login(userName, password);
     }
@@ -37,6 +37,8 @@ public class LoginStepDefinitions {
         Assert.assertEquals(expectedTitle, Driver.get().getTitle());
 
     }
+
+
 
 
 

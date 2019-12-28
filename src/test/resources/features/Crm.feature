@@ -19,6 +19,7 @@ Feature: Crm
                 |Expected Revenue| 500000 |
 
   @MyPipeLine
-  Scenario: User should visualize on CRM only own pipeLine at first Load
+  Scenario: User should use My Pipeline filter and remove it
     Given User should see "My Pipeline" as filter
     Then Listed opportunities must belongs to user
+    And user can remove the filter by pushing cross
