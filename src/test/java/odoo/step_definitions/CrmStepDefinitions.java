@@ -9,7 +9,6 @@ import odoo.utilities.Pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.util.Map;
 
 public class CrmStepDefinitions {
@@ -27,11 +26,10 @@ public class CrmStepDefinitions {
         page.loginPage.navigateTo(module);
     }
 
-
     @Then("{string} title is displayed")
     public void title_is_displayed(String string) {
 
-        page.crmPage.waitUntilLoaderMaskDisappear();
+        BrowserUtils.waitForVisibility(page.loginPage.pipeline, 10);
         page.loginPage.getPageSubTitle(page.loginPage.pipeline);
     }
 
@@ -45,30 +43,37 @@ public class CrmStepDefinitions {
     @Then("user should open a page that has {string} text")
     public void user_should_open_a_page_that_has_text(String expectedPageTitle) {
 
-        page.crmPage.waitUntilLoaderMaskDisappear();
+        BrowserUtils.waitForPresence("//*[normalize-space()='Create an Opportunity' and @class=\"modal-title\"]",10);
         WebElement text=Driver.get().findElement(By.xpath("//*[normalize-space()='Create an Opportunity' and @class=\"modal-title\"]"));
         Assert.assertEquals(expectedPageTitle ,text.getText());
     }
 
     @Then("enter  on Opprtunity Title,Customer,Expected Revenue")
     public void enter_on_Opprtunity_Title_Customer_Expected_Revenue(Map<String,String> dataTable) {
+
         page.crt.createTo(dataTable.get("Opprtunity Title"),dataTable.get("Customer"),dataTable.get("Expected Revenue"));
 
     }
 
     @Given("User should see {string} as filter")
     public void userShouldSeeAsFilter(String MyPipeline) {
+
         Assert.assertEquals(page.crmPage.SelectedFilter.getText(), MyPipeline);
     }
 
-
     @Then("Listed opportunities must belongs to user")
     public void listedOpportunitiesMustBelongsTo() {
-        BrowserUtils.waitForVisibility(page.crmPage.SelectedFilter, 10);
+
         String userName = page.crmPage.userName.getText();
         Assert.assertTrue("There must be much more Opportunities wich belong another user",page.crmPage.checkListSize(userName));
     }
 
 
+    @And("user can remove the filter by pushing cross")
+    public void userCanRemoveTheFilterByPushingCross() {
 
+        page.crmPage.removeFilter.click();
+        page.loginPage.waitUntilLoaderMaskDisappear();
+        Assert.assertTrue("User size is under two", page.crmPage.userSize());
+    }
 }

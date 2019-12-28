@@ -22,6 +22,9 @@ public class CrmPage extends BasePage {
     @FindBy(css = ".o_facet_values")
     public WebElement SelectedFilter;
 
+    @FindBy(css = "div[class='fa fa-sm fa-remove o_facet_remove']")
+    public WebElement removeFilter;
+
     public CrmPage() {
         PageFactory.initElements(Driver.get(), this);
     }
@@ -31,6 +34,10 @@ public class CrmPage extends BasePage {
         List<WebElement>pipeLines = Driver.get().findElements(By.cssSelector(".oe_kanban_content img"));
 
         return pipeLines.size() == pipeLinesOwners.size();
+    }
+    public boolean userSize(){
+        List<WebElement>pipeLines = Driver.get().findElements(By.cssSelector(".oe_kanban_content img"));
+        return pipeLines.size() > 1;
     }
 
   /*  public static void main(String[] args){

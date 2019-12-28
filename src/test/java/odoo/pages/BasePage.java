@@ -64,10 +64,10 @@ public class BasePage {
 
     public boolean waitUntilLoaderMaskDisappear() {
 
-        WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
 
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".o_loading[style ='display: none;']")));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".o_loading[style ='display: none;']")));
             return true;
         } catch (NoSuchElementException e) {
             System.out.println("Loader mask not found!");
