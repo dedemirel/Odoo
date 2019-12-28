@@ -24,7 +24,7 @@ public class BasePage {
     @FindBy(css = "a[class='oe_menu_leaf']")
     public WebElement pageSubTitle;
 
-    @FindBy(css = "#user-menu > a")
+    @FindBy(css = ".oe_topbar_name")
     public WebElement userName;
 
     @FindBy(linkText = "Logout")
@@ -64,10 +64,10 @@ public class BasePage {
 
     public boolean waitUntilLoaderMaskDisappear() {
 
-        WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
 
         try {
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class=\"o_web_client oe_wait\"]")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".o_loading[style ='display: none;']")));
             return true;
         } catch (NoSuchElementException e) {
             System.out.println("Loader mask not found!");
