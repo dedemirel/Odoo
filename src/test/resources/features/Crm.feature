@@ -8,7 +8,7 @@ Feature: Crm
     And user able to navigate "CRM" module
     Then  "Pipeline" title is displayed
 
-@Crm
+  @Crm
   Scenario:Scenario: Login as events crm manager
 
     Then user able to click "Create" submodule
@@ -18,3 +18,7 @@ Feature: Crm
                 |Customer        |aliy    |
                 |Expected Revenue| 500000 |
 
+  @MyPipeLine
+  Scenario: User should visualize on CRM only own pipeLine at first Load
+    Given User should see "My Pipeline" as filter
+    Then Listed opportunities must belongs to user
