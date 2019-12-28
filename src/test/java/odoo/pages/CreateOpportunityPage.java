@@ -9,7 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class CreatePage extends BasePage {
+public class CreateOpportunityPage extends BasePage {
+
     @FindBy(css = "[placeholder=\"e.g. Customer Deal\"]")
     public WebElement Title;
 
@@ -22,7 +23,7 @@ public class CreatePage extends BasePage {
     @FindBy(xpath = "//*[normalize-space()='Create' and @class=\"btn btn-sm btn-primary\"]")
     public WebElement create;
 
-    public CreatePage() {
+    public CreateOpportunityPage() {
         //this method requires to provide webdriver object for @FindBy
         //and page class
         //this means this page class
