@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class CrmStepDefinitions {
 
+
+
     /* I create the objects on pages class under utils
      so we don't need to create so much objets on all step definition pages. We can add
      our page objects under the pages class and call them by creating only one objects in
@@ -23,7 +25,11 @@ public class CrmStepDefinitions {
     @And("user able to navigate {string} module")
     public void userAbleToNavigateModule(String module) {
 
+        BrowserUtils.waitForPageToLoad(10);
+
         page.loginPage.navigateTo(module);
+
+
     }
 
     @Then("{string} title is displayed")
