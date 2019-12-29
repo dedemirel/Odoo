@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = "odoo/step_definitions",
-        dryRun = false,
-//        tags = "@Crm",
+        dryRun = true,
+        tags = "@Events",
         plugin = {"html:target/default-cucumber-reports",
                 "json:target/cucumber.json"
         }
