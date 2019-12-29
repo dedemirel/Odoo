@@ -17,9 +17,9 @@ public class LoginStepDefinitions {
         Driver.get().get(ConfigurationReader.getProperty("url"));
     }
 
-    @Then("user logs in as events crm manager")
-    public void user_logs_in_as_events_crm_manager() {
-        System.out.println("Login as events crm manager");
+    @Then("user logs in as POS manager")
+    public void user_logs_in_as_POS_manager() {
+        System.out.println("Login as events POS manager");
         //we read username and password from properties file
         //usually in java we use camel case for naming variables
         String userName = ConfigurationReader.getProperty("user_name");
@@ -28,10 +28,10 @@ public class LoginStepDefinitions {
     }
 
     //any string in "word" will become a parameter for step definition method
-    //  And user verifies that "Dashboard" page subtitle is displayed
+    //  And user verifies that "Discuss" page subtitle is displayed
     @Then("user verifies that {string} page subtitle is displayed")
     public void user_verifies_that_page_subtitle_is_displayed(String string) {
-        BrowserUtils.wait(4);
+
         Assert.assertEquals(string, loginPage.getPageSubTitle());
         System.out.println("Verifying page subtitle: " + string);
     }
