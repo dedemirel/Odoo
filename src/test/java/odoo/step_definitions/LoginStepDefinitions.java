@@ -22,8 +22,17 @@ public class LoginStepDefinitions {
         System.out.println("Login as events POS manager");
         //we read username and password from properties file
         //usually in java we use camel case for naming variables
-        String userName = ConfigurationReader.getProperty("user_name");
-        String password = ConfigurationReader.getProperty("password");
+        String userName = ConfigurationReader.getProperty("pos_manager");
+        String password = ConfigurationReader.getProperty("pos_manager_password");
+        loginPage.login(userName, password);
+    }
+    @Then("user logs in as events manager")
+    public void userLogsInAsEvents(String credentialName) {
+
+        //we read username and password from properties file
+        String userName = ConfigurationReader.getProperty(credentialName);
+        String password = ConfigurationReader.getProperty(credentialName + "_password");
+        //passwords will be stored as (credential_name_password)
         loginPage.login(userName, password);
     }
 

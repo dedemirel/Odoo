@@ -6,10 +6,10 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/feature",
+        features = "src/test/resources/features",
         glue = "odoo/step_definitions",
         dryRun = false,
-        tags = {"@Login, @PurchaseOrder"},
+        tags = {"@Events, @Login, @PurchaseOrder"},
         plugin = {"html:target/default-cucumber-reports",
                 "json:target/cucumber.json"
         }
