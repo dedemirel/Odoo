@@ -1,5 +1,6 @@
 package odoo.pages;
 
+import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,9 @@ public class LoginPage extends BasePage{
 
     @FindBy(id = "password")//without findby, web element will be null
     public WebElement passwordInput;
+
+    @FindBy(linkText = "Discuss")
+    public WebElement pageSubTitle;
 
     public LoginPage() {
         //it's mandatory if you want to use @FindBy annotation
@@ -39,7 +43,11 @@ public class LoginPage extends BasePage{
         //Keys.ENTER to replace login click
         passwordInput.sendKeys(password,Keys.ENTER);
 
-
+    }
+    public String getPageSubTitle() {
+        //ant time we are verifying page name, or page subtitle=Discuss
+        BrowserUtils.wait(2);
+        return pageSubTitle.getText();
     }
 
 }

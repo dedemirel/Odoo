@@ -1,7 +1,7 @@
 package odoo.pages;
 
-import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
@@ -11,7 +11,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 //everything that is in common among odoo.pages
 //can go here
 //for example top menu elements don't belong to specific page
@@ -20,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BasePage {
     @FindBy(css = "[data-menu=\"68\"]")
     public WebElement contacts;
+
 
     @FindBy(css = "a[class='oe_menu_leaf']")
     public WebElement pageSubTitle;
@@ -43,13 +43,13 @@ public class BasePage {
     @FindBy(xpath = "//*[@class=\"active\"and text()='Pipeline']")
     public WebElement pipeline;
 
-
     public BasePage() {
         //this method requires to provide webdriver object for @FindBy
         //and page class
         //this means this page class
         PageFactory.initElements(Driver.get(), this);
     }
+
 
     /**
      * @return page name, for example: Dashboard
