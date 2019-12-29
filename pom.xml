@@ -6,6 +6,7 @@
 
     <groupId>com.odoo</groupId>
     <artifactId>Summer2019OnlineOdoo</artifactId>
+
     <version>1.0-SNAPSHOT</version>
 
     <properties>
