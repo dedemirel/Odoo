@@ -29,7 +29,6 @@ public class CrmStepDefinitions {
 
         page.loginPage.navigateTo(module);
 
-
     }
 
     @Then("{string} title is displayed")

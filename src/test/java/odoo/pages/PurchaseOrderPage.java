@@ -11,8 +11,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PurchaseOrderPage extends BasePage {
 
-    @FindBy(linkText = "Discuss")
-    public WebElement pageSubTitle;
     @FindBy(linkText = "Purchases")
     public WebElement moduleLocator;
     @FindBy(xpath = "/html/body/div[1]/div[2]/div[1]/ol/li")
@@ -27,17 +25,25 @@ public class PurchaseOrderPage extends BasePage {
     public WebElement pageSubTitle3;
     @FindBy(css= "[name='partner_id'] span")
     public WebElement vendorDropdown;
-    @FindBy(xpath = "//ul[starts-with(@id,'ui-id-')]//a[text()='ACD (copy), Moogii']")
+    @FindBy(xpath = "//ul[starts-with(@id,'ui-id-')]/li[5]")
+    //ul[starts-with(@id,'ui-id-')]//a[text()='ACD (copy), Moogii']
     public WebElement vendorList;
     @FindBy(linkText = "Add an item")
     public WebElement addAnItem;
     @FindBy(css = "td[class='o_data_cell o_required_modifier']")
     public WebElement productDropdown;
-    @FindBy(xpath = "//ul[starts-with(@id,'ui-id-')]//a[text()='[///] iphone 8']")
+    @FindBy(xpath = "//ul[starts-with(@id,'ui-id-')][9]/li[1]")
     public WebElement productName;
-    @FindBy(xpath = ".tab-pane active textarea")
+    @FindBy(css = ".tab-pane.active>textarea:nth-of-type(1)")
     public WebElement defineCondition;
-
+    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/div/div/div/div[1]/div[1]/div[1]/button[5]")
+    public WebElement confirmButton;
+    @FindBy(xpath = "/html/body/div[1]/div[2]/div[1]/div[2]/div[1]/div/div[2]/button[1]")
+    public WebElement saveButton;
+    @FindBy(xpath ="/html/head/title")
+   public  WebElement referenceNumber1;
+    @FindBy(xpath ="//tbody[starts-with(@class,'ui-sortable')]/tr[1]/td[2]" )
+    public WebElement referenceNumber2;
 
 
     public PurchaseOrderPage() {
@@ -50,70 +56,76 @@ public class PurchaseOrderPage extends BasePage {
      * @return page name, for example: Purchases
      */
 
-    public void navigateTo() {
-        BrowserUtils.wait(2);
+    /*public void navigateTo() {
         Actions action = new Actions(Driver.get());
         action.moveToElement(moduleLocator).click().perform();
-    }
+    }*/
     public String getPageSubTitle1() {
         //ant time we are verifying page name, or page subtitle=Requests for Quotation
-        BrowserUtils.wait(2);
-        return pageSubTitle1.getText();
+        BrowserUtils.wait(4);
+        return Driver.get().getTitle();
     }
     public void clickToPurchaseOrders() {
-        BrowserUtils.wait(2);
-        Actions action = new Actions(Driver.get());
-        action.moveToElement(purchaseOrdersButton).click().perform();
+        BrowserUtils.clickWithWait(purchaseOrdersButton);
+        BrowserUtils.wait(4);
+
     }
     public String getPageSubTitle2() {
         //ant time we are verifying page name, or page subtitle=Purchases Order
         BrowserUtils.wait(4);
-        return pageSubTitle2.getText();
+        return Driver.get().getTitle();
     }
     public void clickToCreate() {
-        BrowserUtils.wait(2);
-        Actions action = new Actions(Driver.get());
-        action.moveToElement(createButton).click().perform();
+        BrowserUtils.clickWithWait(createButton);
     }
     public String getPageSubTitle3() {
         //ant time we are verifying page name, or page subtitle=Purchases Order
         BrowserUtils.wait(2);
-        return pageSubTitle3.getText();
+        return Driver.get().getTitle();
     }
 
     public void clickToVendorButton() {
-        BrowserUtils.wait(2);
         Actions action = new Actions(Driver.get());
         action.moveToElement(vendorDropdown).click().perform();
-
     }
     public void selectToVendor() {
-        BrowserUtils.wait(2);
-        Actions action = new Actions(Driver.get());
-        action.moveToElement(vendorList).click().perform();
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(4);
+        vendorList.click();
     }
     public void addAnItem() {
-        BrowserUtils.wait(2);
         Actions action = new Actions(Driver.get());
         action.moveToElement(addAnItem).click().perform();
     }
     public void productDropdown(){
         BrowserUtils.wait(2);
-        Actions action1 = new Actions(Driver.get());
-        action1.moveToElement(productDropdown).click().perform();
-        BrowserUtils.wait(2);
+        Actions action = new Actions(Driver.get());
+        action.moveToElement(productDropdown).click().perform();
     }
     public void productName(){
         BrowserUtils.wait(2);
-        Actions action1 = new Actions(Driver.get());
-        action1.moveToElement(productName).click().perform();
+        Actions action = new Actions(Driver.get());
+        action.moveToElement(productName).click().perform();
+    }
+    public void defineCondition() {
+        BrowserUtils.wait(2);
+        defineCondition.sendKeys("Cakma Tisort", Keys.ENTER);
 
     }
-    /*public void defineCondition() {
+    public void clickToConfirmButton(){
         BrowserUtils.wait(2);
-        defineCondition.sendKeys("Imitation phone", Keys.ENTER);
-        BrowserUtils.wait(2);
-    }*/
+        Actions action = new Actions(Driver.get());
+        action.moveToElement(confirmButton).click().perform();
+
+    }
+    public void clickToSaveButton(){
+        BrowserUtils.wait(4);
+        Actions action = new Actions(Driver.get());
+        action.moveToElement(saveButton).click().perform();
+        BrowserUtils.wait(4);
+
+
+    }
 }
+
+
 
