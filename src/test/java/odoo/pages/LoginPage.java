@@ -1,5 +1,6 @@
 package odoo.pages;
 
+import odoo.utilities.ConfigurationReader;
 import odoo.utilities.Driver;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -39,7 +40,7 @@ public class LoginPage extends BasePage{
         //Keys.ENTER to replace login click
         passwordInput.sendKeys(password,Keys.ENTER);
 
-
     }
+
 
 }

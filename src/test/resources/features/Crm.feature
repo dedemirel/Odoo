@@ -4,7 +4,7 @@ Feature: Crm
 
   Background: User should be on the CRM page
     Given user is on the login page and page title is "Login | Best ERP solution for startups"
-    Then user logs in as events "crm_manager"
+    Then user enters "eventscrmmanager49@info.com" username and "eventscrmmanager" password
     And user able to navigate "CRM" module
     Then  "Pipeline" title is displayed
 
