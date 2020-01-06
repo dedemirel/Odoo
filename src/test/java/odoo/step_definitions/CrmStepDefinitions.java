@@ -57,7 +57,7 @@ public class CrmStepDefinitions {
     public void enter_on_Opprtunity_Title_Customer_Expected_Revenue(Map<String,String> dataTable) {
 
         page.crt.createTo(dataTable.get("Opprtunity Title"),dataTable.get("Customer"),dataTable.get("Expected Revenue"));
-
+page.crt.draganddrop();
     }
 
     @Given("User should see {string} as filter")
