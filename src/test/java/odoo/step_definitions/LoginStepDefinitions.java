@@ -11,29 +11,27 @@ public class LoginStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     LoginPage loginPage = new LoginPage();//created login page object
 
-    @Given("user is on the login page")
-    public void user_is_on_the_login_page() {
-        System.out.println("I am on the login page");
+    @Given("user is on the login page and page title is {string}")
+    public void user_is_on_the_login_page_and_page_title_is(String string) {
         Driver.get().get(ConfigurationReader.getProperty("url"));
+        Assert.assertEquals(string, Driver.get().getTitle());
+        System.out.println(Driver.get().getTitle());
+
     }
 
-    @Then("user logs in as events crm manager")
-    public void user_logs_in_as_events_crm_manager() {
-        System.out.println("Login as events crm manager");
-        //we read username and password from properties file
-        //usually in java we use camel case for naming variables
-        String userName = ConfigurationReader.getProperty("user_name");
-        String password = ConfigurationReader.getProperty("password");
-        loginPage.login(userName, password);
+    @Then("user enters {string} username and {string} password")
+    public void user_enters_username_and_password(String string, String string2) {
+        loginPage.login(string,string2);
+        System.out.println("Login with "+string+" username and "+string2+" password.");
     }
 
-    //any string in "word" will become a parameter for step definition method
-    //  And user verifies that "Dashboard" page subtitle is displayed
-    @Then("user verifies that {string} page subtitle is displayed")
-    public void user_verifies_that_page_subtitle_is_displayed(String string) {
-        BrowserUtils.wait(4);
-        Assert.assertEquals(string, loginPage.getPageSubTitle());
-        System.out.println("Verifying page subtitle: " + string);
+    @Then("user verifies that {string}  is page title is displayed")
+    public void user_verifies_that_is_page_title_is_displayed(String string) {
+        BrowserUtils.waitForPageTitle(string);
+        Assert.assertEquals(string, Driver.get().getTitle());
+        System.out.println(Driver.get().getTitle());
+
     }
+
 
 }
