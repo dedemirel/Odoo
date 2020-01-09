@@ -40,6 +40,43 @@ public class CrmPage extends BasePage {
         return pipeLines.size() > 1;
     }
 
+
+    @FindBy(xpath = "//*[normalize-space()='Create' and @class=\"btn btn-sm btn-primary\"]")
+    public WebElement create;
+
+    @FindBy(xpath = "//*[normalize-space()='Activity Types' and @class='oe_menu_text']")
+    public WebElement activityTypes;
+
+    @FindBy(css = "[class='btn btn-primary btn-sm o_list_button_add']")
+    public WebElement createActivity;
+
+    @FindBy(css = "[class='o_field_char o_field_widget o_input o_required_modifier']")
+    public WebElement activityName;
+
+    @FindBy(css = "[class='o_input o_field_widget']")
+    public WebElement category;
+
+    @FindBy(css = "[name='category']>option")
+    public List<WebElement> categoryOptions;
+
+    @FindBy(css = "[class='o_input o_field_widget']>option:nth-of-type(3)")
+    public WebElement meetingOption;
+
+    @FindBy(xpath = "//*[@class='o_field_char o_field_widget o_input']")
+    public WebElement summary;
+
+    @FindBy(xpath = "//*[@class='o_field_integer o_field_number o_field_widget o_input']")
+    public WebElement days;
+
+    @FindBy(css = "[name='next_type_ids']>div>input")
+    public WebElement recommendedNextActivities;
+
+    @FindBy(css = "[class='ui-menu-item']>a")
+    public WebElement testDemo;
+
+    @FindBy(css = "[class='btn btn-primary btn-sm o_form_button_save']")
+    public WebElement saveForActivity;
+
   /*  public static void main(String[] args){
         Pages page = new Pages();
         Driver.get().get(ConfigurationReader.getProperty("url"));
