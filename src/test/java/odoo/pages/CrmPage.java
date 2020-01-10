@@ -7,6 +7,7 @@ import odoo.utilities.Driver;
 import odoo.utilities.Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
@@ -15,6 +16,16 @@ import javax.swing.text.Utilities;
 import java.util.List;
 
 public class CrmPage extends BasePage {
+    @FindBy(css = "[class *='o_kanban_group ']")
+    public List<WebElement> listOfKanbanColumns;
+
+    private int numOfKanbanColumn = 1;
+    private By kanbanColumn =(By.cssSelector("[class *='o_kanban_group u' ]:nth-of-type("+numOfKanbanColumn+"))"));
+
+    private List<WebElement>elementsUnderKanbanColumn = Driver.get().findElements( By.cssSelector("[class *='o_kanban_group u' ]:nth-of-type("+numOfKanbanColumn+")>div[modifiers]"));
+
+    @FindBy(css = " [class *='o_kanban_group u' ]>div[modifiers]:nth-child(2)")
+    public WebElement opportunityElement;
 
     @FindBy(xpath = "//*[normalize-space()='Create' and @type='button']")
     public WebElement createButton;
@@ -24,22 +35,6 @@ public class CrmPage extends BasePage {
 
     @FindBy(css = "div[class='fa fa-sm fa-remove o_facet_remove']")
     public WebElement removeFilter;
-
-    public CrmPage() {
-        PageFactory.initElements(Driver.get(), this);
-    }
-    public boolean checkListSize(String userName){
-
-        List<WebElement>pipeLinesOwners = Driver.get().findElements(By.cssSelector(".oe_kanban_content img[title = '"+userName+"']"));
-        List<WebElement>pipeLines = Driver.get().findElements(By.cssSelector(".oe_kanban_content img"));
-
-        return pipeLines.size() == pipeLinesOwners.size();
-    }
-    public boolean userSize(){
-        List<WebElement>pipeLines = Driver.get().findElements(By.cssSelector(".oe_kanban_content img"));
-        return pipeLines.size() > 1;
-    }
-
 
     @FindBy(xpath = "//*[normalize-space()='Create' and @class=\"btn btn-sm btn-primary\"]")
     public WebElement create;
@@ -86,13 +81,17 @@ public class CrmPage extends BasePage {
 
         page.loginPage.login(userName, password);
 
-
+        String result= "";
         page.loginPage.navigateTo("CRM");
-        BrowserUtils.waitForVisibility(page.crmPage.SelectedFilter, 10);
-        String userName1 = page.loginPage.userName.getText();
+        WebElement element = page.crmPage.opportunityElement;
+        BrowserUtils.waitForVisibility(element, 10);
+//        BrowserUtils.wait(3);
+        for (WebElement text: page.crmPage.elementsUnderKanbanColumn ) {
+            result += text.getText();
+        };
 
-        System.out.println(Driver.get().findElements(By.cssSelector(".oe_kanban_content img[title = '"+userName1+"']")).size());
-        System.out.println(Driver.get().findElements(By.cssSelector(".oe_kanban_content img")).size());
+
+        System.out.println("result"+ result);
     }*/
 
 
