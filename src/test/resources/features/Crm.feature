@@ -24,19 +24,24 @@ Feature: Crm
     Then Listed opportunities must belongs to user
     And user can remove the filter by pushing cross
 
-      @actvity_types
-      Scenario: Verify that user able to create an activity
-      Given user able to navigate Activity Types page
-      Then user able to click on Create button
-      And user able to set name "Hasan Oz" on the table
-      Then user clicks Category
-      And user able to see two options
-        |Other  |
-        |Meeting|
-      Then user able to select Meeting option
-      Then user able to write "All CRM Activities" on the Summary section
-      Then user able to write "3 days" on the Days section
-      And user clicks Recommended Next Activities
-      Then user able to select for select TestDemo option
-      And user able to save table.
+  @actvity_types
+  Scenario: Verify that user able to create an activity
+    Given user able to navigate Activity Types page
+    Then user able to click on Create button
+    And user able to set name "Hasan Oz" on the table
+    Then user clicks Category
+    And user able to see two options
+      |Other  |
+      |Meeting|
+    Then user able to select Meeting option
+    Then user able to write "All CRM Activities" on the Summary section
+    Then user able to write "3 days" on the Days section
+    And user clicks Recommended Next Activities
+    Then user able to select for select TestDemo option
+    And user able to save table.
 
+  @KanbanKolumns
+  Scenario: User should move opporunities to other kanban columns
+    Given User should see 6 column
+     And user holds and moves Opportunity
+    Then user verify that selected opportunity is on the kanban Column
