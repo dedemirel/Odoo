@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class BasePage {
     @FindBy(css = "[data-menu=\"68\"]")
     public WebElement contacts;
@@ -29,7 +31,7 @@ public class BasePage {
     @FindBy(linkText = "My User")
     public WebElement myUser;
 
-    @FindBy(css = "[class=\"o_loading\"]")
+    @FindBy(css = "div[class = 'o_loading']")
     public WebElement loaderMask;
 
     @FindBy(css = "[accesskey=\"c\"]")
@@ -63,8 +65,13 @@ public class BasePage {
         return element.getText();
     }
 
-    public void FluenwaitForPageBlockage(){
-        BrowserUtils.fluenwaitForVisibility(pageBlockageNone);
+    public void waitForPageBlockage(){
+        // this method created for using for finish of the page blockage.
+        // it targeted the text of style attribute in the blockage WebElement
+        WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
+        String styleTagInMask = loaderMask.getAttribute("style");
+        wait.until(ExpectedConditions.attributeToBe(loaderMask,"style","display: none;"));
+
     }
 
     public boolean waitUntilLoaderMaskDisappear() {
