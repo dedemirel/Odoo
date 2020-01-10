@@ -189,5 +189,10 @@ public class BrowserUtils {
         }
         return listOfStrings;
     }
+    public static void fluenwaitForVisibility(WebElement element){
+        FluentWait wait = new FluentWait(Driver.get()).withTimeout(Duration.ofSeconds(10)).pollingEvery(Duration.ofMillis(50)).ignoring(NullPointerException.class);
+        wait.until(ExpectedConditions.visibilityOf(element));
+
+    }
 
 }
