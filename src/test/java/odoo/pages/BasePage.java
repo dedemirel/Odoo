@@ -2,10 +2,7 @@ package odoo.pages;
 
 import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -69,7 +66,6 @@ public class BasePage {
         // this method created for using for finish of the page blockage.
         // it targeted the text of style attribute in the blockage WebElement
         WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
-        String styleTagInMask = loaderMask.getAttribute("style");
         wait.until(ExpectedConditions.attributeToBe(loaderMask,"style","display: none;"));
 
     }
@@ -97,19 +93,18 @@ public class BasePage {
         WebElement Module = Driver.get().findElement(By.xpath("//*[normalize-space()='" + module + "' and @class=" +
                 "\"oe_menu_text\"]"));
 
-//      BrowserUtils.waitForPresence(moduleLocator, 10);
         BrowserUtils.waitForClickablility(Module, 10);
         Module.click();
     }
-    public void draganddrop(WebElement element1, WebElement element2){
-        BrowserUtils.wait(5);
-        BrowserUtils.waitForClickablility(element1,5);
-        Actions action=new Actions(Driver.get());
-        action.dragAndDrop(element1,element2).perform();
-        BrowserUtils.wait(5);
-        BrowserUtils.waitForVisibility(element2,5);
+
+    public void dragAndDrop(String element1_locatorXpath, String element2_locatorXpath) {
+        Actions action = new Actions(Driver.get());
+        BrowserUtils.waitForPresence(element1_locatorXpath, 20);
+        WebElement element1 = Driver.get().findElement(By.xpath(element1_locatorXpath));
+        WebElement element2 = Driver.get().findElement(By.cssSelector(element2_locatorXpath));
+
+        action.dragAndDrop(element1, element2).perform();
+
     }
-
-
 
 }
