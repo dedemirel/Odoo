@@ -1,4 +1,3 @@
-@CrmFeature
 Feature: Crm
   As user, I want to create a pipeline
 
@@ -10,7 +9,7 @@ Feature: Crm
     Then  "Pipeline" title is displayed
 
   @Crm
-  Scenario:As crm manager should be abled to Create Opportunity
+  Scenario:Scenario: Login as events crm manager
 
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
@@ -25,39 +24,19 @@ Feature: Crm
     Then Listed opportunities must belongs to user
     And user can remove the filter by pushing cross
 
-  @actvity_types
-  Scenario: Verify that user able to create an activity
-    Given user able to navigate Activity Types page
-    Then user able to click on Create button
-    And user able to set name "Hasan Oz" on the table
-    Then user clicks Category
-    And user able to see two options
-      |Other  |
-      |Meeting|
-    Then user able to select Meeting option
-    Then user able to write "All CRM Activities" on the Summary section
-    Then user able to write "3 days" on the Days section
-    And user clicks Recommended Next Activities
-    Then user able to select for select TestDemo option
-    And user able to save table.
-
-  @KanbanKolumns
-  Scenario: User should create and move opporunity on kanban
-    Given There shouldn't be anyOpportunity by the sameName
-    Then user able to click "Create" submodule
-    And user should open a page that has "Create an Opportunity" text
-    Then send keys below
-      |Opprtunity Title| DragAndDropTest |
-      |Customer        | NoCustomerTest  |
-      |Expected Revenue| 000000000000000 |
-     And user holds and moves "DragAndDropTest" Opportunity to 3 column
-    Then user verify that "DragAndDropTest" opportunity is on the kanban Column 3
-
-  @DeleteOpportuntiy
-  Scenario: User should be able to delete opportunity
-    Given There should be DragAndDropTest "DeleteThistest" created
-    And user clicks drop-down menu on "DeleteThistest"
-    When opened menu clicks delete "DeleteThistest" and ok
-    Then "DeleteThistest" has been deleted
-
+      @actvity_types
+      Scenario: Verify that user able to create an activity
+      Given user able to navigate Activity Types page
+      Then user able to click on Create button
+      And user able to set name "Hasan Oz" on the table
+      Then user clicks Category
+      And user able to see two options
+        |Other  |
+        |Meeting|
+      Then user able to select Meeting option
+      Then user able to write "All CRM Activities" on the Summary section
+      Then user able to write "3 days" on the Days section
+      And user clicks Recommended Next Activities
+      Then user able to select for select TestDemo option
+      And user able to save table.
 

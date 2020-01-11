@@ -1,11 +1,11 @@
 package odoo.pages;
 
-
 import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -36,11 +36,11 @@ public class CreateOpportunityPage extends BasePage {
 
     public void createTo(String title, String customer, String revenue) {
         Title.sendKeys(title);
+
         Customerr.sendKeys(customer, Keys.ENTER);
         Revenue.clear();
         Revenue.sendKeys(revenue);
         create.click();
-
     }
 
     public boolean ifNotcreateOpportunity(String opportunityName){
