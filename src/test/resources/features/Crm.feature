@@ -1,5 +1,6 @@
 Feature: Crm
-  As user, I want to create a pipeline
+  As an Event Crm Manager,I should be able to create a pipline under new submodule and
+  drag and drop it to Proposition submodule
 
 
   Background: User should be on the CRM page
@@ -9,7 +10,7 @@ Feature: Crm
     Then  "Pipeline" title is displayed
 
   @Crm
-  Scenario:Scenario: Login as events crm manager
+  Scenario: Login as events crm manager
 
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
