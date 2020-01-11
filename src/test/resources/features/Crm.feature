@@ -1,3 +1,4 @@
+@CrmFeature
 Feature: Crm
   As user, I want to create a pipeline
 
@@ -9,7 +10,7 @@ Feature: Crm
     Then  "Pipeline" title is displayed
 
   @Crm
-  Scenario:Scenario: Login as events crm manager
+  Scenario:As crm manager should be abled to Create Opportunity
 
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
@@ -41,7 +42,22 @@ Feature: Crm
     And user able to save table.
 
   @KanbanKolumns
-  Scenario: User should move opporunities to other kanban columns
-    Given User should see 6 column
-     And user holds and moves Opportunity
-    Then user verify that selected opportunity is on the kanban Column
+  Scenario: User should create and move opporunity on kanban
+    Given There shouldn't be anyOpportunity by the sameName
+    Then user able to click "Create" submodule
+    And user should open a page that has "Create an Opportunity" text
+    Then send keys below
+      |Opprtunity Title| DragAndDropTest |
+      |Customer        | NoCustomerTest  |
+      |Expected Revenue| 000000000000000 |
+     And user holds and moves "DragAndDropTest" Opportunity to 3 column
+    Then user verify that "DragAndDropTest" opportunity is on the kanban Column 3
+
+  @DeleteOpportuntiy
+  Scenario: User should be able to delete opportunity
+    Given There should be DragAndDropTest "DeleteThistest" created
+    And user clicks drop-down menu on "DeleteThistest"
+    When opened menu clicks delete "DeleteThistest" and ok
+    Then "DeleteThistest" has been deleted
+
+
