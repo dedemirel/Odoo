@@ -1,7 +1,9 @@
 package odoo.pages;
 
 
+import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,24 +25,33 @@ public class CreateOpportunityPage extends BasePage {
     public WebElement Revenue;
 
     @FindBy(xpath = "//*[normalize-space()='Create' and @class=\"btn btn-sm btn-primary\"]")
-    public WebElement create;
+    private WebElement create;
+
+    @FindBy (xpath = "//h4[@class='modal-title']")
+    public WebElement createOpportunityWindowTitle;
 
     public CreateOpportunityPage() {
-        //this method requires to provide webdriver object for @FindBy
-        //and page class
-        //this means this page class
         PageFactory.initElements(Driver.get(), this);
     }
 
     public void createTo(String title, String customer, String revenue) {
         Title.sendKeys(title);
-
         Customerr.sendKeys(customer, Keys.ENTER);
         Revenue.clear();
         Revenue.sendKeys(revenue);
         create.click();
+
     }
 
-
+    public boolean ifNotcreateOpportunity(String opportunityName){
+        CrmPage crm = new CrmPage();
+        if (crm.notPresenceOfOpportunity(opportunityName)){
+            crm.createButton.click();
+            BrowserUtils.waitForVisibility(createOpportunityWindowTitle, 10);
+            createTo(opportunityName,"","");
+            BrowserUtils.waitForPresence(crm.opportunitiyLocator(opportunityName),20);
+        }
+        return !crm.notPresenceOfOpportunity(opportunityName);
+    }
 
 }
