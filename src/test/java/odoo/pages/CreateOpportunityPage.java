@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CreateOpportunityPage extends BasePage {
 
-    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/div/div/div/div[1]/div[9]")
+    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/div/div/div/div[1]/div[2]")
     public WebElement neww;
 
     @FindBy(css = "[data-id=\"3\"]")
