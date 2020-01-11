@@ -1,3 +1,4 @@
+@EventsFeature
 Feature: Events
   As user I should be able to see Events Page
   Background: User should be on the CRM page
