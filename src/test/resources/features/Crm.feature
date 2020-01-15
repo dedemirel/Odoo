@@ -9,13 +9,14 @@ Feature: User should be able to use create,delete, drag&drop opportunities and f
 
   @Crm
   Scenario:user should be able to create opportunity
-
+    Given There shouldn't be any opportunity named "booook"
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
-    Then enter  on Opprtunity Title,Customer,Expected Revenue
+    When enter  on Opprtunity Title,Customer,Expected Revenue
                 |Opprtunity Title| booook |
                 |Customer        |aliy    |
                 |Expected Revenue| 500000 |
+    Then user should see new opportunity named "booook"
 
   @MyPipeLine
   Scenario: User should use My Pipeline filter and remove it
@@ -43,7 +44,7 @@ Feature: User should be able to use create,delete, drag&drop opportunities and f
 
   @KanbanKolumns
   Scenario: User should move opporunity on kanban
-    Given There shouldn't be anyOpportunity by the sameName
+    Given There shouldn't be any opportunity named "DragAndDropTest"
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
     Then send keys below
