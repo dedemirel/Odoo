@@ -5,7 +5,6 @@ import odoo.utilities.BrowserUtils;
 import odoo.utilities.ConfigurationReader;
 import odoo.utilities.Driver;
 import odoo.utilities.Pages;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -79,11 +78,17 @@ public class CrmPage extends BasePage {
          return "//*[text() = '" + nameOfOpportunity + "']/parent::node()/parent::node()/parent::node()";
 
     }
+    public boolean PresenceOfOpportunity(String nameOfOpportunity){// if not exist returns true
+        String opportunityXpath = opportunitiyLocator(nameOfOpportunity);
+        BrowserUtils.waitForPresence(opportunityXpath,5);
+        WebElement opportunityWebElement = Driver.get().findElement(By.xpath(opportunityXpath));
+        return opportunityWebElement.isDisplayed();
+    }
 
 
     public boolean notPresenceOfOpportunity(String nameOfOpportunity){// if not exist returns true
         try {
-            return BrowserUtils.waitForInVisibility(opportunitiyLocator(nameOfOpportunity), 1);
+            return BrowserUtils.waitForInVisibility(opportunitiyLocator(nameOfOpportunity), 2);
         }catch (TimeoutException e){
             return false;
         }
@@ -110,20 +115,29 @@ public class CrmPage extends BasePage {
         return "[class *='o_kanban_group u' ]:nth-of-type("+ num +")";
     }
 
-    public boolean cleanDragAndDropTest(){
-        if(!notPresenceOfOpportunity("DragAndDropTest")){
-            openDropDownMenuOnOpprtunities("DragAndDropTest");
-            deleteOpportunity("DragAndDropTest");
+    public boolean cleanKanbanTable(String opportunityName){
+        if(!notPresenceOfOpportunity(opportunityName)) {
+
+            while (!notPresenceOfOpportunity(opportunityName)) {
+
+                openDropDownMenuOnOpprtunities(opportunityName);
+                deleteOpportunity(opportunityName);
+
+                BrowserUtils.waitForPresence(opportunitiyLocator(opportunityName), 2);
+            }
         }
-        return notPresenceOfOpportunity("DragAndDropTest");
+        return notPresenceOfOpportunity(opportunityName);
     }
 
 
-    public boolean correctionOfColumnOfOpportunities(int columnNumber, String nameOfOpportunity){
-        WebElement columnExpected = Driver.get().findElement(By.cssSelector(kanbanColumnElement(columnNumber)));
-        WebElement columnActual = Driver.get().findElement(By.xpath("//*[text() = '" + nameOfOpportunity + "']/parent::node()/parent::node()/parent::node()/parent::node()/parent::node()"));
+    public boolean correctionOfColumnOfOpportunities(int expectedColumnNumber, String nameOfOpportunity){
 
-        return columnActual.hashCode() == columnExpected.hashCode();
+        String opportunity = opportunitiyLocator(nameOfOpportunity);
+        BrowserUtils.waitForPresence(opportunity,10);
+        WebElement columnExpected = Driver.get().findElement(By.cssSelector(kanbanColumnElement(expectedColumnNumber)));
+        WebElement columnActual = Driver.get().findElement(By.xpath(opportunity+"/parent::node()/parent::node()"));
+        boolean result =  columnActual.hashCode() == columnExpected.hashCode();
+        return result;
     }
 
 
@@ -141,19 +155,7 @@ public class CrmPage extends BasePage {
         Driver.get().findElement(By.xpath(okButton+"/parent::node()")).click();
 
     }
-
-    public static void main(String[] args) {
-
-        Pages c =new Pages();
-        Driver.get().get(ConfigurationReader.getProperty("url"));
-        c.loginPage.login(ConfigurationReader.getProperty("crm_manager"),ConfigurationReader.getProperty("crm_manager_password"));
-        c.crmPage.navigateTo("CRM");
-        c.crmPage.waitForPageBlockage();
-        BrowserUtils.waitForPresence(c.crmPage.opportunitiyLocator("booook"),30);
-        while(!c.crmPage.notPresenceOfOpportunity("booook")){
-            Assert.assertTrue("element is not presence",!c.crmPage.notPresenceOfOpportunity("booook"));
-            c.crmPage.deleteOpportunity("booook");}
-    }
+    
 
 }
 
