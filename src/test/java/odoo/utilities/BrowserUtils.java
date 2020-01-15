@@ -197,6 +197,14 @@ public class BrowserUtils {
         }
         return listOfStrings;
     }
+    public static void highlightElement(WebDriver driver,WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border:2px solid red;');",element);
+        BrowserUtils.wait(3);
+        js.executeScript("arguments[0].setAttribute('style',; border:2px solid white;');",element);
+
+
+    }
 
 
 }
