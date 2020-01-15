@@ -8,6 +8,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.nio.file.Watchable;
+
 
 public class PurchaseOrderPage extends BasePage {
 
@@ -26,7 +28,6 @@ public class PurchaseOrderPage extends BasePage {
     @FindBy(css= "[name='partner_id'] span")
     public WebElement vendorDropdown;
     @FindBy(xpath = "//ul[starts-with(@id,'ui-id-')]/li[5]")
-    //ul[starts-with(@id,'ui-id-')]//a[text()='ACD (copy), Moogii']
     public WebElement vendorList;
     @FindBy(linkText = "Add an item")
     public WebElement addAnItem;
@@ -62,17 +63,16 @@ public class PurchaseOrderPage extends BasePage {
     }*/
     public String getPageSubTitle1() {
         //ant time we are verifying page name, or page subtitle=Requests for Quotation
-        BrowserUtils.wait(4);
+        BrowserUtils.waitForPageTitle("Requests for Quotation - Odoo");
         return Driver.get().getTitle();
     }
     public void clickToPurchaseOrders() {
         BrowserUtils.clickWithWait(purchaseOrdersButton);
-        BrowserUtils.wait(4);
 
     }
     public String getPageSubTitle2() {
         //ant time we are verifying page name, or page subtitle=Purchases Order
-        BrowserUtils.wait(4);
+        BrowserUtils.waitForPageTitle("Purchase Orders - Odoo");
         return Driver.get().getTitle();
     }
     public void clickToCreate() {
@@ -80,7 +80,7 @@ public class PurchaseOrderPage extends BasePage {
     }
     public String getPageSubTitle3() {
         //ant time we are verifying page name, or page subtitle=Purchases Order
-        BrowserUtils.wait(2);
+        BrowserUtils.waitForPageTitle("New - Odoo");
         return Driver.get().getTitle();
     }
 
@@ -89,41 +89,36 @@ public class PurchaseOrderPage extends BasePage {
         action.moveToElement(vendorDropdown).click().perform();
     }
     public void selectToVendor() {
-        BrowserUtils.wait(4);
+        BrowserUtils.waitForClickablility(vendorList,4);
         vendorList.click();
     }
     public void addAnItem() {
         Actions action = new Actions(Driver.get());
         action.moveToElement(addAnItem).click().perform();
+        BrowserUtils.waitForClickablility(productDropdown,4);
     }
     public void productDropdown(){
-        BrowserUtils.wait(2);
         Actions action = new Actions(Driver.get());
         action.moveToElement(productDropdown).click().perform();
+        BrowserUtils.waitForVisibility(productName,4);
     }
     public void productName(){
-        BrowserUtils.wait(2);
         Actions action = new Actions(Driver.get());
         action.moveToElement(productName).click().perform();
     }
-    public void defineCondition() {
-        BrowserUtils.wait(2);
+    public void defineCondition()
+    {
         defineCondition.sendKeys("Cakma Tisort", Keys.ENTER);
 
     }
     public void clickToConfirmButton(){
-        BrowserUtils.wait(2);
         Actions action = new Actions(Driver.get());
         action.moveToElement(confirmButton).click().perform();
 
     }
     public void clickToSaveButton(){
-        BrowserUtils.wait(4);
         Actions action = new Actions(Driver.get());
         action.moveToElement(saveButton).click().perform();
-        BrowserUtils.wait(4);
-
-
     }
 }
 
