@@ -1,8 +1,6 @@
 package odoo.step_definitions;
 
-
-
-    import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import odoo.utilities.BrowserUtils;
 import odoo.utilities.Pages;

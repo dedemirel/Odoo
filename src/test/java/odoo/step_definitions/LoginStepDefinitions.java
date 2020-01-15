@@ -18,6 +18,10 @@ public class LoginStepDefinitions {
         System.out.println(Driver.get().getTitle());
 
     }
+    @Then("user logs in as {string}")
+    public void user_logs_in_as(String role) {
+        loginPage.login(role);
+    }
 
     @Then("user enters {string} username and {string} password")
     public void user_enters_username_and_password(String string, String string2) {

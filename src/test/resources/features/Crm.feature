@@ -9,7 +9,7 @@ Feature: Crm
     Then  "Pipeline" title is displayed
 
   @Crm
-  Scenario:Scenario: Login as events crm manager
+  Scenario:Login as events crm manager
 
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
