@@ -14,7 +14,7 @@ Feature: Crm
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
     Then enter  on Opprtunity Title,Customer,Expected Revenue
-                |Opprtunity Title| iphone |
+                |Opprtunity Title| booook |
                 |Customer        |aliy    |
                 |Expected Revenue| 500000 |
 

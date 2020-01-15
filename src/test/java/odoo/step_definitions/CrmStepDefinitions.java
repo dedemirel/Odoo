@@ -3,6 +3,7 @@ package odoo.step_definitions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
 import odoo.utilities.Pages;
@@ -14,19 +15,12 @@ import java.util.Map;
 public class CrmStepDefinitions {
 
 
-
-    /* I create the objects on pages class under utils
-     so we don't need to create so much objets on all step definition pages. We can add
-     our page objects under the pages class and call them by creating only one objects in
-     this page def. classes*/
-
     Pages page = new Pages();
 
     @And("user able to navigate {string} module")
     public void userAbleToNavigateModule(String module) {
 
         BrowserUtils.waitForPageToLoad(10);
-
         page.loginPage.navigateTo(module);
 
     }
@@ -48,16 +42,17 @@ public class CrmStepDefinitions {
     @Then("user should open a page that has {string} text")
     public void user_should_open_a_page_that_has_text(String expectedPageTitle) {
 
-        BrowserUtils.waitForPresence("//*[normalize-space()='Create an Opportunity' and @class=\"modal-title\"]",10);
-        WebElement text=Driver.get().findElement(By.xpath("//*[normalize-space()='Create an Opportunity' and @class=\"modal-title\"]"));
-        Assert.assertEquals(expectedPageTitle ,text.getText());
+        BrowserUtils.waitForVisibility(page.crt.createOpportunityWindowTitle, 10);
+        Assert.assertEquals(expectedPageTitle, page.crt.createOpportunityWindowTitle.getText());
     }
 
     @Then("enter  on Opprtunity Title,Customer,Expected Revenue")
-    public void enter_on_Opprtunity_Title_Customer_Expected_Revenue(Map<String,String> dataTable) {
+    public void enter_on_Opportunity_Title_Customer_Expected_Revenue(Map<String, String> dataTable) {
 
-        page.crt.createTo(dataTable.get("Opprtunity Title"),dataTable.get("Customer"),dataTable.get("Expected Revenue"));
-page.crt.draganddrop();
+        page.crt.createTo(dataTable.get("Opprtunity Title"), dataTable.get("Customer"), dataTable.get("Expected Revenue"));
+        page.crt.dragAndDrop(page.crmPage.opportunitiyLocator(dataTable.get("Opprtunity Title")), page.crmPage.kanbanColumnElement(3));
+        Assert.assertTrue("The target column does not have object that you want to move", page.crmPage.correctionOfColumnOfOpportunities(3, dataTable.get("Opprtunity Title")));
+
     }
 
     @Given("User should see {string} as filter")
@@ -70,7 +65,7 @@ page.crt.draganddrop();
     public void listedOpportunitiesMustBelongsTo() {
 
         String userName = page.crmPage.userName.getText();
-        Assert.assertTrue("There must be much more Opportunities wich belong another user",page.crmPage.checkListSize(userName));
+        Assert.assertTrue("There must be much more Opportunities which belong another user", page.crmPage.checkListSize(userName));
     }
 
 
@@ -78,7 +73,28 @@ page.crt.draganddrop();
     public void userCanRemoveTheFilterByPushingCross() {
 
         page.crmPage.removeFilter.click();
-        page.loginPage.waitUntilLoaderMaskDisappear();
-        Assert.assertTrue("User size is under two", page.crmPage.userSize());
+        page.loginPage.waitForPageBlockage();
+        Assert.assertTrue("User opportunity list  size is under two", page.crmPage.userOpportunityListSize());
+    }
+
+    @And("user clicks drop-down menu on {string}")
+    public void userClicksDropDownMenuOn(String oportunityName) {
+        page.crmPage.openDropDownMenuOnOpprtunities(oportunityName);
+    }
+
+    @When("opened menu clicks delete {string} and ok")
+    public void openedMenuClicksDeleteAndOk(String oportunityName) {
+        page.crmPage.deleteOpportunity(oportunityName);
+    }
+
+    @Then("{string} has been deleted")
+    public void hasBeenDeleted(String oportunityName) {
+        Assert.assertTrue("Opportunity didn't deleted", page.crmPage.notPresenceOfOpportunity(oportunityName));
+    }
+
+
+    @Given("There should be DragAndDropTest {string} created")
+    public void thereShouldBeDragAndDropTestCreated(String oportunityName) {
+        Assert.assertTrue(page.crt.ifNotcreateOpportunity(oportunityName));
     }
 }

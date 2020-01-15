@@ -12,11 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CreateOpportunityPage extends BasePage {
 
-    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/div/div/div/div[1]/div[2]")
-    public WebElement neww;
-
-    @FindBy(css = "[data-id=\"3\"]")
-    public WebElement proposition;
+    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/div/div/div/div[1]/div[9]")
+    public WebElement createdOpportunity;
 
     @FindBy(css = "[placeholder=\"e.g. Customer Deal\"]")
     public WebElement Title;
@@ -28,12 +25,12 @@ public class CreateOpportunityPage extends BasePage {
     public WebElement Revenue;
 
     @FindBy(xpath = "//*[normalize-space()='Create' and @class=\"btn btn-sm btn-primary\"]")
-    public WebElement create;
+    private WebElement create;
+
+    @FindBy (xpath = "//h4[@class='modal-title']")
+    public WebElement createOpportunityWindowTitle;
 
     public CreateOpportunityPage() {
-        //this method requires to provide webdriver object for @FindBy
-        //and page class
-        //this means this page class
         PageFactory.initElements(Driver.get(), this);
     }
 
@@ -46,11 +43,15 @@ public class CreateOpportunityPage extends BasePage {
         create.click();
     }
 
-    public void draganddrop(){
-        BrowserUtils.wait(5);
-        Actions action=new Actions(Driver.get());
-        action.dragAndDrop(neww,proposition).perform();
-        BrowserUtils.wait(10);
+    public boolean ifNotcreateOpportunity(String opportunityName){
+        CrmPage crm = new CrmPage();
+        if (crm.notPresenceOfOpportunity(opportunityName)){
+            crm.createButton.click();
+            BrowserUtils.waitForVisibility(createOpportunityWindowTitle, 10);
+            createTo(opportunityName,"","");
+            BrowserUtils.waitForPresence(crm.opportunitiyLocator(opportunityName),20);
+        }
+        return !crm.notPresenceOfOpportunity(opportunityName);
     }
 
 }

@@ -30,23 +30,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public static void waitForStaleElement(WebElement element) {
-        int y = 0;
-        while (y <= 15) {
-            try {
-                element.isDisplayed();
-                break;
-            } catch (StaleElementReferenceException st) {
-                y++;
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            break;
-        }
-    }
+
 
     /**
      * Waits for the provided element to be visible on the page
@@ -58,6 +42,11 @@ public class BrowserUtils {
     public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
         WebDriverWait wait = new WebDriverWait(Driver.get(), timeToWaitInSec);
         return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static boolean waitForInVisibility(String xpath, int timeToWaitInSec) {
+        WebDriverWait wait = new WebDriverWait(Driver.get(), timeToWaitInSec);
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
     }
 
     /**
@@ -81,6 +70,24 @@ public class BrowserUtils {
         WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+    public static void waitForStaleElement(WebElement element){
+        int y = 0;
+        while (y <= 15) {
+            try {
+                element.isDisplayed();
+                break;
+            } catch (StaleElementReferenceException st) {
+                y++;
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+        }
+    }
+
 
     public static WebElement waitForPresence(String elementxpath, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
@@ -95,6 +102,7 @@ public class BrowserUtils {
      * @param name of test or whatever your like
      * take a name of a test and returns a path to screenshot takes
      */
+
     public static String getScreenshot(String name) {
         // name the screenshot with the current date time to avoid duplicate name
 //        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));​
@@ -189,5 +197,14 @@ public class BrowserUtils {
         }
         return listOfStrings;
     }
+    public static void highlightElement(WebDriver driver,WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border:2px solid red;');",element);
+        BrowserUtils.wait(3);
+        js.executeScript("arguments[0].setAttribute('style',; border:2px solid white;');",element);
+
+
+    }
+
 
 }

@@ -2,21 +2,16 @@ package odoo.pages;
 
 import odoo.utilities.BrowserUtils;
 import odoo.utilities.Driver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 
-//everything that is in common among odoo.pages
-//can go here
-//for example top menu elements don't belong to specific page
-//top menu appears on every single page
-//so we can keep them here
 public class BasePage {
     @FindBy(css = "[data-menu=\"68\"]")
     public WebElement contacts;
@@ -32,13 +27,18 @@ public class BasePage {
 
     @FindBy(linkText = "My User")
     public WebElement myUser;
-    @FindBy(css = "[class=\"o_loading\"]")
+
+    @FindBy(css = "div[class = 'o_loading']")
     public WebElement loaderMask;
+
     @FindBy(css = "[accesskey=\"c\"]")
     public WebElement create;
+
     @FindBy(xpath = "//*[normalize-space()='CRM' and @class=\"oe_menu_text\"]")
     public WebElement Crm;
 
+    @FindBy(css = (".o_loading[style ='display: none;']"))
+    public WebElement pageBlockageNone;
 
     @FindBy(xpath = "//*[@class=\"active\"and text()='Pipeline']")
     public WebElement pipeline;
@@ -60,6 +60,14 @@ public class BasePage {
         BrowserUtils.waitForStaleElement(element);
 
         return element.getText();
+    }
+
+    public void waitForPageBlockage(){
+        // this method created for using for finish of the page blockage.
+        // it targeted the text of style attribute in the blockage WebElement
+        WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
+        wait.until(ExpectedConditions.attributeToBe(loaderMask,"style","display: none;"));
+
     }
 
     public boolean waitUntilLoaderMaskDisappear() {
@@ -85,10 +93,18 @@ public class BasePage {
         WebElement Module = Driver.get().findElement(By.xpath("//*[normalize-space()='" + module + "' and @class=" +
                 "\"oe_menu_text\"]"));
 
-//      BrowserUtils.waitForPresence(moduleLocator, 10);
         BrowserUtils.waitForClickablility(Module, 10);
         Module.click();
     }
 
+    public void dragAndDrop(String element1_locatorXpath, String element2_locatorXpath) {
+        Actions action = new Actions(Driver.get());
+        BrowserUtils.waitForPresence(element1_locatorXpath, 20);
+        WebElement element1 = Driver.get().findElement(By.xpath(element1_locatorXpath));
+        WebElement element2 = Driver.get().findElement(By.cssSelector(element2_locatorXpath));
+
+        action.dragAndDrop(element1, element2).perform();
+
+    }
 
 }
