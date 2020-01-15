@@ -50,9 +50,8 @@ public class CrmStepDefinitions {
     public void enter_on_Opportunity_Title_Customer_Expected_Revenue(Map<String, String> dataTable) {
 
         page.crt.createTo(dataTable.get("Opprtunity Title"), dataTable.get("Customer"), dataTable.get("Expected Revenue"));
-        page.crt.dragAndDrop(page.crmPage.opportunitiyLocator(dataTable.get("Opprtunity Title")), page.crmPage.kanbanColumnElement(3));
-        Assert.assertTrue("The target column does not have object that you want to move", page.crmPage.correctionOfColumnOfOpportunities(3, dataTable.get("Opprtunity Title")));
-
+        Assert.assertTrue("The target column does not have object that you want to create", page.crmPage.correctionOfColumnOfOpportunities(3, dataTable.get("Opprtunity Title")));
+        page.crmPage.deleteOpportunity(dataTable.get("Opprtunity Title"));
     }
 
     @Given("User should see {string} as filter")

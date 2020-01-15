@@ -96,6 +96,12 @@ public class BasePage {
         BrowserUtils.waitForClickablility(Module, 10);
         Module.click();
     }
+    public void dragAndDrop(WebElement element1, WebElement element2){
+        Actions action=new Actions(Driver.get());
+        BrowserUtils.wait(5);
+        action.dragAndDrop(element1,element2).perform();
+
+    }
 
     public void dragAndDrop(String element1_locatorXpath, String element2_locatorXpath) {
         Actions action = new Actions(Driver.get());

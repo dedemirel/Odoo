@@ -5,16 +5,14 @@ import odoo.utilities.BrowserUtils;
 import odoo.utilities.ConfigurationReader;
 import odoo.utilities.Driver;
 import odoo.utilities.Pages;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CrmPage extends BasePage {
@@ -143,39 +141,19 @@ public class CrmPage extends BasePage {
         Driver.get().findElement(By.xpath(okButton+"/parent::node()")).click();
 
     }
-/*
-the main method below can be used to delete the opportunities on CRM page that we created while testing.
 
-    public static void main(String[] args){
-        Pages page = new Pages();
+    public static void main(String[] args) {
+
+        Pages c =new Pages();
         Driver.get().get(ConfigurationReader.getProperty("url"));
-
-        String userName = ConfigurationReader.getProperty("crm_manager");
-        String password = ConfigurationReader.getProperty("crm_manager"+"_password");
-
-        page.loginPage.login(userName, password);
-
-        page.loginPage.navigateTo("CRM");
-
-        page.crmPage.waitUntilLoaderMaskDisappear();
-        Actions move = new Actions(Driver.get());
-
-        while(true) {
-            move.moveToElement(Driver.get().findElement(By.xpath("//*[text() = 'iphone']/parent::node()/parent::node()/parent::node()/parent::node()/div"))).click().perform();
-
-            Driver.get().findElement(By.xpath("//*[text() = 'iphone']/parent::node()/parent::node()/parent::node()/parent::node()/div/ul/li[2]/a[text()='Delete']")).click();
-
-            page.crmPage.waitUntilLoaderMaskDisappear();
-            BrowserUtils.waitForPresence("//span[text()='Ok']",10);
-            BrowserUtils.waitForClickablility(Driver.get().findElement(By.xpath("//span[text()='Ok']")),10);
-            Driver.get().findElement(By.xpath("//span[text()='Ok']/parent::node()")).click();
-            page.crmPage.waitUntilLoaderMaskDisappear();
-        }
-
-
-
+        c.loginPage.login(ConfigurationReader.getProperty("crm_manager"),ConfigurationReader.getProperty("crm_manager_password"));
+        c.crmPage.navigateTo("CRM");
+        c.crmPage.waitForPageBlockage();
+        BrowserUtils.waitForPresence(c.crmPage.opportunitiyLocator("booook"),30);
+        while(!c.crmPage.notPresenceOfOpportunity("booook")){
+            Assert.assertTrue("element is not presence",!c.crmPage.notPresenceOfOpportunity("booook"));
+            c.crmPage.deleteOpportunity("booook");}
     }
-*/
 
 }
 
