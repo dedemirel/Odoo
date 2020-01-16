@@ -10,6 +10,7 @@ Feature: User should be able to use create,delete, drag&drop opportunities and f
   @Crm
   Scenario:user should be able to create opportunity
     Given There shouldn't be any opportunity named "booook"
+
     Then user able to click "Create" submodule
     And user should open a page that has "Create an Opportunity" text
     When enter  on Opprtunity Title,Customer,Expected Revenue
