@@ -11,10 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CrmPage extends BasePage {
@@ -81,11 +78,17 @@ public class CrmPage extends BasePage {
          return "//*[text() = '" + nameOfOpportunity + "']/parent::node()/parent::node()/parent::node()";
 
     }
+    public boolean PresenceOfOpportunity(String nameOfOpportunity){// if not exist returns true
+        String opportunityXpath = opportunitiyLocator(nameOfOpportunity);
+        BrowserUtils.waitForPresence(opportunityXpath,5);
+        WebElement opportunityWebElement = Driver.get().findElement(By.xpath(opportunityXpath));
+        return opportunityWebElement.isDisplayed();
+    }
 
 
     public boolean notPresenceOfOpportunity(String nameOfOpportunity){// if not exist returns true
         try {
-            return BrowserUtils.waitForInVisibility(opportunitiyLocator(nameOfOpportunity), 1);
+            return BrowserUtils.waitForInVisibility(opportunitiyLocator(nameOfOpportunity), 2);
         }catch (TimeoutException e){
             return false;
         }
@@ -112,20 +115,29 @@ public class CrmPage extends BasePage {
         return "[class *='o_kanban_group u' ]:nth-of-type("+ num +")";
     }
 
-    public boolean cleanDragAndDropTest(){
-        if(!notPresenceOfOpportunity("DragAndDropTest")){
-            openDropDownMenuOnOpprtunities("DragAndDropTest");
-            deleteOpportunity("DragAndDropTest");
+    public boolean cleanKanbanTable(String opportunityName){
+        if(!notPresenceOfOpportunity(opportunityName)) {
+
+            while (!notPresenceOfOpportunity(opportunityName)) {
+
+                openDropDownMenuOnOpprtunities(opportunityName);
+                deleteOpportunity(opportunityName);
+
+                BrowserUtils.waitForPresence(opportunitiyLocator(opportunityName), 2);
+            }
         }
-        return notPresenceOfOpportunity("DragAndDropTest");
+        return notPresenceOfOpportunity(opportunityName);
     }
 
 
-    public boolean correctionOfColumnOfOpportunities(int columnNumber, String nameOfOpportunity){
-        WebElement columnExpected = Driver.get().findElement(By.cssSelector(kanbanColumnElement(columnNumber)));
-        WebElement columnActual = Driver.get().findElement(By.xpath("//*[text() = '" + nameOfOpportunity + "']/parent::node()/parent::node()/parent::node()/parent::node()/parent::node()"));
+    public boolean correctionOfColumnOfOpportunities(int expectedColumnNumber, String nameOfOpportunity){
 
-        return columnActual.hashCode() == columnExpected.hashCode();
+        String opportunity = opportunitiyLocator(nameOfOpportunity);
+        BrowserUtils.waitForPresence(opportunity,10);
+        WebElement columnExpected = Driver.get().findElement(By.cssSelector(kanbanColumnElement(expectedColumnNumber)));
+        WebElement columnActual = Driver.get().findElement(By.xpath(opportunity+"/parent::node()/parent::node()"));
+        boolean result =  columnActual.hashCode() == columnExpected.hashCode();
+        return result;
     }
 
 
@@ -143,39 +155,7 @@ public class CrmPage extends BasePage {
         Driver.get().findElement(By.xpath(okButton+"/parent::node()")).click();
 
     }
-/*
-the main method below can be used to delete the opportunities on CRM page that we created while testing.
-
-    public static void main(String[] args){
-        Pages page = new Pages();
-        Driver.get().get(ConfigurationReader.getProperty("url"));
-
-        String userName = ConfigurationReader.getProperty("crm_manager");
-        String password = ConfigurationReader.getProperty("crm_manager"+"_password");
-
-        page.loginPage.login(userName, password);
-
-        page.loginPage.navigateTo("CRM");
-
-        page.crmPage.waitUntilLoaderMaskDisappear();
-        Actions move = new Actions(Driver.get());
-
-        while(true) {
-            move.moveToElement(Driver.get().findElement(By.xpath("//*[text() = 'iphone']/parent::node()/parent::node()/parent::node()/parent::node()/div"))).click().perform();
-
-            Driver.get().findElement(By.xpath("//*[text() = 'iphone']/parent::node()/parent::node()/parent::node()/parent::node()/div/ul/li[2]/a[text()='Delete']")).click();
-
-            page.crmPage.waitUntilLoaderMaskDisappear();
-            BrowserUtils.waitForPresence("//span[text()='Ok']",10);
-            BrowserUtils.waitForClickablility(Driver.get().findElement(By.xpath("//span[text()='Ok']")),10);
-            Driver.get().findElement(By.xpath("//span[text()='Ok']/parent::node()")).click();
-            page.crmPage.waitUntilLoaderMaskDisappear();
-        }
-
-
-
-    }
-*/
+    
 
 }
 

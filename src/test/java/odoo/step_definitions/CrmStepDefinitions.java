@@ -50,8 +50,6 @@ public class CrmStepDefinitions {
     public void enter_on_Opportunity_Title_Customer_Expected_Revenue(Map<String, String> dataTable) {
 
         page.crt.createTo(dataTable.get("Opprtunity Title"), dataTable.get("Customer"), dataTable.get("Expected Revenue"));
-        page.crt.dragAndDrop(page.crmPage.opportunitiyLocator(dataTable.get("Opprtunity Title")), page.crmPage.kanbanColumnElement(3));
-        Assert.assertTrue("The target column does not have object that you want to move", page.crmPage.correctionOfColumnOfOpportunities(3, dataTable.get("Opprtunity Title")));
 
     }
 
@@ -96,5 +94,17 @@ public class CrmStepDefinitions {
     @Given("There should be DragAndDropTest {string} created")
     public void thereShouldBeDragAndDropTestCreated(String oportunityName) {
         Assert.assertTrue(page.crt.ifNotcreateOpportunity(oportunityName));
+    }
+
+
+    @Given("There shouldn't be any opportunity named {string}")
+    public void thereShouldnTBeAnyOpportunityNamed(String arg0) {
+       page.crmPage.cleanKanbanTable(arg0);
+    }
+
+    @Then("user should see new opportunity named {string}")
+    public void userShouldSeeNewOpportunityNamed(String arg0) {
+        Assert.assertTrue("Thekanban table does not have object that you want to create", page.crmPage.PresenceOfOpportunity(arg0));
+        page.crmPage.cleanKanbanTable(arg0);
     }
 }

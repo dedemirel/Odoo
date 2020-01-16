@@ -36,8 +36,5 @@ public class KanbanKolumnsOnCrmStepDefinitions {
         page.crt.createTo(dataTable.get("Opprtunity Title"),dataTable.get("Customer"),dataTable.get("Expected Revenue"));
     }
 
-    @Given("There shouldn't be anyOpportunity by the sameName")
-    public void thereShouldnTBeAnyOpportunityByTheSameName() {
-        Assert.assertTrue(page.crmPage.cleanDragAndDropTest());
-    }
+
 }
